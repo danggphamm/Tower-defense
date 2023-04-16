@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public float localSpeed;
+    // If eating plant or not
+    public bool eatingEnemy;
 
     // The game manager
     GameObject gameManager;
@@ -26,9 +28,16 @@ public class EnemyController : MonoBehaviour
         if (gameObject != null)
         {
             // Move forward
-            if (!gameManager.GetComponent<GameManager>().gameOver)
+            if (!gameManager.GetComponent<GameManager>().gameOver && !eatingEnemy)
             {
                 transform.position += transform.forward * localSpeed * Time.deltaTime;
+            }
+
+            // Destroy when low hp
+            if(gameObject.GetComponent<EnemyStats>().currentHp <= 0f)
+            {
+                gameManager.GetComponent<GameManager>().enemies.Remove(gameObject);
+                Destroy(gameObject);
             }
         }
     }

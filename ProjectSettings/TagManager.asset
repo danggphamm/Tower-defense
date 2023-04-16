@@ -6,6 +6,10 @@ TagManager:
   tags:
   - tile
   - losing
+  - energy
+  - plant
+  - enemy
+  - attackTrigger
   layers:
   - Default
   - TransparentFX
