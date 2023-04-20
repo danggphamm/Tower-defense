@@ -32,7 +32,10 @@ public class PlantColisionBehaviour : MonoBehaviour
                 // Tell the enemies that they've finished eating
                 foreach( Collider c in collidingEnemies)
                 {
-                    c.transform.parent.gameObject.GetComponent<EnemyController>().eatingEnemy = false;
+                    if(c!= null)
+                    {
+                        c.transform.parent.gameObject.GetComponent<EnemyController>().eatingEnemy = false;
+                    }
                 }
 
                 Destroy(transform.parent.gameObject);

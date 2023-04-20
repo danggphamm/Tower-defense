@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     // Gameover
     public bool gameOver = false;
 
+    // Lost
+    public bool lostGame = false;
+
     // Plant type 1 cooldown
     public float plantType1Cooldown;
 
@@ -23,14 +26,23 @@ public class GameManager : MonoBehaviour
     // Keep track if type 1 in cooldown or not
     public bool isPlantType1InCoolDown = false;
 
-    // Plant type 1 cooldown
+    // Plant type 2 cooldown
     public float plantType2Cooldown;
 
-    // Last time installed type1
+    // Last time installed type2
     float lastTImeInstallPlantType2 = -1000f;
 
-    // Keep track if type 1 in cooldown or not
+    // Keep track if type 2 in cooldown or not
     public bool isPlantType2InCoolDown = false;
+
+    // Plant type 3 cooldown
+    public float plantType3Cooldown;
+
+    // Last time installed type3
+    float lastTImeInstallPlantType3 = -1000f;
+
+    // Keep track if type 3 in cooldown or not
+    public bool isPlantType3InCoolDown = false;
 
     // The positions of the spawner
     public List<Vector3> spawningLocations = new List<Vector3>();
@@ -44,10 +56,26 @@ public class GameManager : MonoBehaviour
     // If on final wave
     public bool onFinalWave = false;
 
+    // The level name
+    public string levelName;
+
+    // The next level name
+    public string nextLevelName;
+
+    // The win panel
+    public GameObject wingame;
+    // The lose panel
+    public GameObject losegame;
+    public bool announced = false;
+
+    GameObject enemySpawner;
     // Start is called before the first frame update
     void Start()
     {
-        
+        wingame.SetActive(false);
+        losegame.SetActive(false);
+
+        enemySpawner = GameObject.Find("EnemySpawner");
     }
 
     // Update is called once per frame
@@ -83,6 +111,11 @@ public class GameManager : MonoBehaviour
                             isPlantType2InCoolDown = true;
                             lastTImeInstallPlantType2 = Time.time;
                         }
+                        else if (currentSelectedPlant.GetComponent<PlantStats>().type == 3)
+                        {
+                            isPlantType3InCoolDown = true;
+                            lastTImeInstallPlantType3 = Time.time;
+                        }
                     }
                     currentSelectedPlant = null;
                 }
@@ -116,10 +149,20 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // Check if type 3 is in cooldown
+        if (isPlantType3InCoolDown)
+        {
+            // If cooldown over
+            if (Time.time - lastTImeInstallPlantType3 > plantType3Cooldown)
+            {
+                isPlantType3InCoolDown = false;
+            }
+        }
+
         // Reset pressing r
         if (Input.GetKeyDown("r"))
         {
-            SceneManager.LoadScene("main");
+            SceneManager.LoadScene(levelName);
         }
 
         // If no enemies left
@@ -127,10 +170,27 @@ public class GameManager : MonoBehaviour
         {
             hasEnemy = false;
 
-            if (onFinalWave)
+            if (onFinalWave && enemySpawner.GetComponent<EnemySpawner>().finishSpawningFinalWave)
             {
                 gameOver = true;
             }
+        }
+
+        if (gameOver && !announced)
+        {
+            if (lostGame)
+            {
+                losegame.SetActive(true);
+            }
+            else
+            {
+                PlayerData newRecord = new PlayerData(levelStringToLevel(levelName) + 1);
+                SaveAndLoad.pData = newRecord;
+                SaveAndLoad.Save();
+
+                wingame.SetActive(true);
+            }
+            announced = true;
         }
     }
 
@@ -146,6 +206,10 @@ public class GameManager : MonoBehaviour
         else if (type == 2)
         {
             result = isPlantType2InCoolDown;
+        }
+        else if (type == 3)
+        {
+            result = isPlantType3InCoolDown;
         }
 
         return result;
@@ -164,6 +228,10 @@ public class GameManager : MonoBehaviour
         {
             result = lastTImeInstallPlantType2;
         }
+        else if (type == 3)
+        {
+            result = lastTImeInstallPlantType3;
+        }
 
         return result;
     }
@@ -180,6 +248,10 @@ public class GameManager : MonoBehaviour
         else if (type == 2)
         {
             result = plantType2Cooldown;
+        }
+        else if (type == 3)
+        {
+            result = plantType3Cooldown;
         }
 
         return result;
@@ -199,6 +271,41 @@ public class GameManager : MonoBehaviour
                     result = true;
                 }
             }
+        }
+
+        return result;
+    }
+
+    // load next level
+    public void loadNextLevel()
+    {
+        if(nextLevelName != "" && nextLevelName != null)
+        {
+            SceneManager.LoadScene(nextLevelName);
+        }
+    }
+
+    // reset
+    public void reset()
+    {
+         SceneManager.LoadScene(levelName);
+    }
+
+    int levelStringToLevel(string levelString)
+    {
+        int result = 0;
+
+        if(levelString == "1-1")
+        {
+            result = 0;
+        }
+        else if (levelString == "1-2")
+        {
+            result = 1;
+        }
+        else if (levelString == "1-3")
+        {
+            result = 2;
         }
 
         return result;

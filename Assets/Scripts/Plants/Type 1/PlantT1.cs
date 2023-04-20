@@ -16,6 +16,7 @@ public class PlantT1 : MonoBehaviour
     // Height of the plant
     float height;
 
+    public GameObject generatingPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,7 @@ public class PlantT1 : MonoBehaviour
             if(Time.time - lastTime > producingFrequency)
             {
                 // Calculate the position of the plant
-                Vector3 newPos = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
+                Vector3 newPos = new Vector3(generatingPosition.transform.position.x, transform.position.y + height - 1f, generatingPosition.transform.position.z);
 
                 Instantiate(energyBall, newPos, transform.rotation);
                 lastTime = Time.time;

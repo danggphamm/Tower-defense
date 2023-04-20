@@ -369,7 +369,9 @@
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Grid/GridRenderer.cs"
 "Assets/Scripts/Grid/Tile/TileInstantiate.cs"
+"Assets/Scripts/Plants/Energy/EnergyGenerator.cs"
 "Assets/Scripts/Plants/Energy/EnergyStats.cs"
+"Assets/Scripts/Plants/Energy/FallingDown.cs"
 "Assets/Scripts/Plants/Energy/FlyingUp.cs"
 "Assets/Scripts/Plants/PlantColisionBehaviour.cs"
 "Assets/Scripts/Plants/PlantStats.cs"
@@ -377,8 +379,11 @@
 "Assets/Scripts/Plants/Type 2/AttackMovingForward.cs"
 "Assets/Scripts/Plants/Type 2/AttackStats.cs"
 "Assets/Scripts/Plants/Type 2/ShootingBean.cs"
+"Assets/Scripts/ProgressSaving/PlayerData.cs"
+"Assets/Scripts/ProgressSaving/SaveAndLoad.cs"
 "Assets/Scripts/UI/GoldText.cs"
 "Assets/Scripts/UI/SelectPlant.cs"
+"Assets/Scripts/UI/StartGame.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 

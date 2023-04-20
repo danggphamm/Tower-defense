@@ -40,6 +40,7 @@ public class ECollisionBehaviour : MonoBehaviour
         if (other.transform.gameObject.tag == "losing")
         {
             gameManager.GetComponent<GameManager>().gameOver = true;
+            gameManager.GetComponent<GameManager>().lostGame = true;
         }
 
         // If collides with plant

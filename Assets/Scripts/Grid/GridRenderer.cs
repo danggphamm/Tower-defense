@@ -27,6 +27,20 @@ public class GridRenderer : MonoBehaviour
     // The game manager
     GameObject gameManager;
 
+    float minX;
+    float maxX;
+    float minZ;
+    float maxZ;
+
+    // The x position of the center of the grid
+    public float centerX;
+
+    // The z position of the center of the grid
+    public float centerZ;
+
+    public float xWidth;
+    public float zWidth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,11 +65,32 @@ public class GridRenderer : MonoBehaviour
                 Vector3 newPos = new Vector3(transform.position.x + i * width, transform.position.y, transform.position.z + j * width);
                 // Instantiate the tile
                 GameObject tile = Instantiate(gridTile, newPos, transform.rotation);
+
+                // Record the min x and z for calculating the center of the grid
+                if(i == 0 && j == 0)
+                {
+                    minX = transform.position.x;
+                    minZ = transform.position.z;
+                }
+
+                // Record the max x and z for calculating the center of the grid
+                if (i == numColumn - 1 && j == numRow - 1)
+                {
+                    maxX = transform.position.x + i * width;
+                    maxZ = transform.position.z + j * width;
+                }
             }
         }
 
+        // For calculating energy falling down positions 
+        centerX = (maxX + minX) / 2f;
+        centerZ = (maxZ + minZ) / 2f;
+
+        xWidth = System.Math.Abs(maxX - minX);
+        zWidth = System.Math.Abs(maxZ - minZ);
+
         // Adjust the losing bar's position. X = middle of filed. Z = back of the field
-        losingBar.transform.position = new Vector3(transform.position.x + numRow*width/2, transform.position.y, transform.position.z + width*(numRow+1));
+        losingBar.transform.position = new Vector3(transform.position.x + numRow*width/2, transform.position.y, transform.position.z + width*(numRow));
 
         // Adjust the attack triggerer's position. X = middle of filed. Z = front of the field
         attackTriggerer.transform.position = new Vector3(transform.position.x + numRow * width / 2, transform.position.y, transform.position.z - width*0.25f);

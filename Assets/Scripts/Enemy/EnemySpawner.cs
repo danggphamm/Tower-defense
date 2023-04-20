@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
     float lastSpawningTime;
     float startTime;
     bool onFinalWave = false;
-    bool finishSpawningFinalWave = false;
+    public bool finishSpawningFinalWave = false;
     // The positions of the spawner
     List<GameObject> finalWaveEnemies = new List<GameObject>();
 
