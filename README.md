@@ -40,7 +40,7 @@ Level 2:
 - Win if clear the final wave.
 
 Level 3:
-![Screenshot (24)](https://user-images.githubusercontent.com/55885808/233506541-0a408d1e-2dfc-4542-aaf7-cf0a6374b305.png)
+![Screenshot (26)](https://user-images.githubusercontent.com/55885808/233507230-95342dcd-9a0e-491e-b435-dc7adf9cb8da.png)
 - 3 lanes.
 - Can pick all 3 monster.
 - Energy falls from the sky once a while (Like in Plants vs Zombies.)
